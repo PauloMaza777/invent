@@ -5,6 +5,7 @@ import {
   TextInput,
   Button,
   Text,
+  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
 
@@ -38,6 +39,12 @@ const styles = StyleSheet.create({
 function Login(): React.JSX.Element {
   const [usuario, setUsuario] = useState('');
   const [contrasena, setContrasena] = useState('');
+
+  const btnIngresarOnPress = function () {
+    if (usuario && contrasena) {
+      Alert.alert('Entraste', 'Inicio sesión...');
+    }
+  };
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.container}>
@@ -55,7 +62,7 @@ function Login(): React.JSX.Element {
           secureTextEntry={true}
           onChangeText={p => setContrasena(p)}
         />
-        <Button title="Ingresar" />
+        <Button title="Ingresar" onPress={btnIngresarOnPress} />
       </View>
     </SafeAreaView>
   );
