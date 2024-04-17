@@ -36,14 +36,24 @@ const styles = StyleSheet.create({
   },
 });
 
-function Login(): React.JSX.Element {
+type RootStackParamList = {
+  HOme: undefined;
+  Login: undefined;
+};
+type LoginProps = {
+  navigation: StackNavigationProp<RootStackParamList, 'Home'>;
+};
+
+function Login({navigation}: LoginProps): React.JSX.Element {
   const [usuario, setUsuario] = useState('');
   const [contrasena, setContrasena] = useState('');
 
   const btnIngresarOnPress = function () {
     if (usuario && contrasena) {
-      Alert.alert('Entraste', 'Inicio sesión...');
+      navigation.navigate('Home');
+      return;
     }
+    Alert.alert('Fallido', 'Datos incorrectos...');
   };
   return (
     <SafeAreaView style={styles.screen}>
