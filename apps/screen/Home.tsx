@@ -40,6 +40,7 @@ function Home({navigation}: HomeProps): React.JSX.Element {
   );
 
   useEffect(() => {
+    LocalDB.init();
     navigation.addListener('focus', async () => {
       const db = await LocalDB.connect();
       db.transaction(async tx => {

@@ -1,4 +1,8 @@
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  NavigationContainer,
+  NavigationProp,
+  useNavigation,
+} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import Home from './apps/screen/Home';
 import Login from './apps/screen/Login';
@@ -13,6 +17,13 @@ export type RootStackParamList = {
   Detalles: ProductDetailsParams;
   ProductAdd: undefined;
 };
+
+function HomeHeader(): React.JSX.Element {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+  return (
+    <Button title="Agregar" onPress={() => navigation.navigate('ProductAdd')} />
+  );
+}
 
 export default function App(): React.JSX.Element {
   return (
@@ -30,11 +41,7 @@ export default function App(): React.JSX.Element {
           name="Home"
           component={Home}
           options={{
-            headerRight: () => (
-              <Button
-                title="Agregar"
-                onPress={() => console.log('Passed')}></Button>
-            ),
+            headerRight: HomeHeader,
           }}
         />
         <Stack.Screen name="Detalles" component={Detalles} />

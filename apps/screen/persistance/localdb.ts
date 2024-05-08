@@ -10,10 +10,11 @@ export default class LocalDB {
       tx.executeSql(
         `CREATE TABLE IF NOT EXISTS preduntos (
         id              INTEGER         NOT NULL        PRIMARY KEY         AUTOINCREMENT,
-        nombre          VARCHAR(64)     NOT NULL        DEFAULT '0.0',
+        nombre          VARCHAR(64)     NOT NULL,        
+        precio          DECIMAL(10,2)   NOT NULL        DEFAULT '0.0', 
         minStock        INTEGER         NOT NULL        DEFAULT 0,
         currentStock    INTEGER         NOT NULL        DEFAULT 0,
-        maxStock        INTEGER         NOT NULL        DEFAULT 0,
+        maxStock        INTEGER         NOT NULL        DEFAULT 0
       );`,
         [],
         () => console.log('CREATED TABLE productos'),
