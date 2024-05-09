@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 import {
   NavigationContainer,
   NavigationProp,
@@ -10,13 +11,16 @@ import Detalles, {Params as ProductDetailsParams} from './apps/screen/Detalles';
 import ProducAdd from './apps/screen/ProductAdd';
 import {Button} from 'react-native';
 
-const Stack = createStackNavigator();
-
 export type RootStackParamList = {
+  Login: undefined;
   Home: undefined;
   Detalles: ProductDetailsParams;
   ProductAdd: undefined;
 };
+
+export type StackNavigation = NavigationProp<RootStackParamList>;
+
+const Stack = createStackNavigator();
 
 function HomeHeader(): React.JSX.Element {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -25,7 +29,7 @@ function HomeHeader(): React.JSX.Element {
   );
 }
 
-export default function App(): React.JSX.Element {
+function App(): React.JSX.Element {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
@@ -50,3 +54,5 @@ export default function App(): React.JSX.Element {
     </NavigationContainer>
   );
 }
+
+export default App;

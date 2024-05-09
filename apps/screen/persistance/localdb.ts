@@ -8,8 +8,8 @@ export default class LocalDB {
     const db = await LocalDB.connect();
     db.transaction(tx => {
       tx.executeSql(
-        `CREATE TABLE IF NOT EXISTS preduntos (
-        id              INTEGER         NOT NULL        PRIMARY KEY         AUTOINCREMENT,
+        `CREATE TABLE IF NOT EXISTS productos (
+        id              INTEGER         PRIMARY KEY         AUTOINCREMENT,
         nombre          VARCHAR(64)     NOT NULL,        
         precio          DECIMAL(10,2)   NOT NULL        DEFAULT '0.0', 
         minStock        INTEGER         NOT NULL        DEFAULT 0,

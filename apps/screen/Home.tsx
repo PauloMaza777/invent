@@ -47,13 +47,7 @@ function Home({navigation}: HomeProps): React.JSX.Element {
         tx.executeSql(
           'SELECT * FROM productos',
           [],
-          (_, res) => {
-            let prods = [];
-            for (let i = 0; i < res.rows.length; i++) {
-              prods.push(res.rows.item(i));
-            }
-            setProducts(prods);
-          },
+          (_, res) => setProducts(res.rows.raw()),
           error => console.error({error}),
         );
       });
