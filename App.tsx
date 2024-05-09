@@ -20,7 +20,7 @@ export type RootStackParamList = {
 
 export type StackNavigation = NavigationProp<RootStackParamList>;
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<RootStackParamList>();
 
 function HomeHeader(): React.JSX.Element {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
