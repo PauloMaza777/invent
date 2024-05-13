@@ -9,9 +9,14 @@ import {
   Alert,
 } from 'react-native';
 import localDB from './persistance/localdb';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../../App';
+
+export type StackNavigation = NavigationProp<RootStackParamList>;
 
 const ProductAdd: React.FC = () => {
   const [nombre, setNombre] = useState('');
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [precio, setPrecio] = useState('');
   const [minStock, setMinStock] = useState('');
   const [maxStock, setMaxStock] = useState('');
@@ -38,6 +43,7 @@ const ProductAdd: React.FC = () => {
       console.error(error);
       Alert.alert('Error', 'Hubo un error al guardar el producto');
     }
+    navigation.goBack();
   };
 
   return (
@@ -79,7 +85,6 @@ const ProductAdd: React.FC = () => {
           keyboardType="numeric"
           placeholderTextColor="rgba(0, 0, 0, 0.5)"
         />
-
         <TouchableOpacity style={styles.saveButton} onPress={guardarProducto}>
           <Text style={styles.saveButtonText}>Guardar</Text>
         </TouchableOpacity>

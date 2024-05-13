@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     padding: 12,
     alignItems: 'center',
+    color: 'while',
   },
 });
 export default App;
