@@ -1,9 +1,10 @@
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import {Product} from './model/Products';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {useEffect, useState} from 'react';
-import {RootStackParamList} from '../../App';
-import {RouteProp} from '@react-navigation/native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { Product } from './model/Products';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useEffect, useState } from 'react';
+import { RootStackParamList } from '../../App';
+import { RouteProp } from '@react-navigation/native';
+import LocalDB from './persistance/localdb';
 
 export type Params = {
   product: Product;
@@ -14,11 +15,29 @@ export type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Detalles'>;
 };
 
-function Detalles({route}: Props): React.JSX.Element {
+function Detalles({ route, navigation }: Props): React.JSX.Element {
   const [product, setProduct] = useState<Product>();
+  const [moviminetos, setmoviminetos] = useState<any[]>();
+
   useEffect(() => {
     setProduct(route.params.product);
-  }, [route]);
+
+    LocalDB.init();
+    navigation.addListener('focus', async () => {
+      const db = await LocalDB.connect();
+      db.transaction(async tx => {
+        tx.executeSql(
+          'SELECT * FROM Movimientos ',
+          [],
+          (_, res) =>{ setmoviminetos(res.rows.raw()); console.log(res.rows.raw());
+          },
+          error => console.error({ error }),
+        );
+      });
+    });
+  }, [route, navigation]);
+
+
 
   return (
     <SafeAreaView>

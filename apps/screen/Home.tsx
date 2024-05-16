@@ -1,10 +1,10 @@
-import {StackNavigationProp} from '@react-navigation/stack';
-import React, {useEffect, useState} from 'react';
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import {RouteProp} from '@react-navigation/native';
-import {Product} from './model/Products';
-import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
-import {RootStackParamList} from '../../App';
+import { StackNavigationProp } from '@react-navigation/stack';
+import React, { useEffect, useState } from 'react';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { RouteProp } from '@react-navigation/native';
+import { Product } from './model/Products';
+import { FlatList, TouchableOpacity } from 'react-native-gesture-handler';
+import { RootStackParamList } from '../../App';
 import LocalDB from './persistance/localdb';
 
 type HomeScreenProps = StackNavigationProp<RootStackParamList, 'Home'>;
@@ -15,14 +15,15 @@ type HomeProps = {
   route: HomeScreenRoute;
 };
 
-function Home({navigation}: HomeProps): React.JSX.Element {
+function Home({ navigation }: HomeProps): React.JSX.Element {
   const [products, setProducts] = useState<Product[]>([]);
-  const productItem = ({item}: {item: Product}) => (
+  const productItem = ({ item }: { item: Product }) => (
     <TouchableOpacity
       style={styles.productItem}
-      onPress={() => navigation.push('Detalles', {product: item})}>
-      <View style={{flexDirection: 'row'}}>
-        <View style={{flexDirection: 'column', flexGrow: 9}}>
+      onLongPress={() => navigation.push('AddMovimentio', { product: item.id })}
+      onPress={() => navigation.push('Detalles', { product: item })}>
+      <View style={{ flexDirection: 'row' }}>
+        <View style={{ flexDirection: 'column', flexGrow: 9 }}>
           <Text style={styles.itemTitle}>{item.nombre}</Text>
           <Text style={styles.itemDetails}>
             Precio: ${item.precio.toFixed(2)}
@@ -48,7 +49,7 @@ function Home({navigation}: HomeProps): React.JSX.Element {
           'SELECT * FROM productos',
           [],
           (_, res) => setProducts(res.rows.raw()),
-          error => console.error({error}),
+          error => console.error({ error }),
         );
       });
     });

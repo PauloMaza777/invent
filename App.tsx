@@ -4,18 +4,21 @@ import {
   NavigationProp,
   useNavigation,
 } from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import Home from './apps/screen/Home';
 import Login from './apps/screen/Login';
-import Detalles, {Params as ProductDetailsParams} from './apps/screen/Detalles';
+import Detalles, { Params as ProductDetailsParams } from './apps/screen/Detalles';
 import ProducAdd from './apps/screen/ProductAdd';
-import {Button} from 'react-native';
+import { Button } from 'react-native';
+import AddMOviminetos, { Params as MOvimientosParam } from './apps/screen/ProductUpdate';
+
 
 export type RootStackParamList = {
   Login: undefined;
   Home: undefined;
   Detalles: ProductDetailsParams;
   ProductAdd: undefined;
+  AddMovimentio: MOvimientosParam,
 };
 
 export type StackNavigation = NavigationProp<RootStackParamList>;
@@ -38,7 +41,7 @@ function App(): React.JSX.Element {
           component={Login}
           options={{
             headerShown: false,
-            headerStyle: {backgroundColor: '#ffa000'},
+            headerStyle: { backgroundColor: '#ffa000' },
           }}
         />
         <Stack.Screen
@@ -48,6 +51,7 @@ function App(): React.JSX.Element {
             headerRight: HomeHeader,
           }}
         />
+        <Stack.Screen name="AddMovimentio" component={AddMOviminetos} />
         <Stack.Screen name="Detalles" component={Detalles} />
         <Stack.Screen name="ProductAdd" component={ProducAdd} />
       </Stack.Navigator>
