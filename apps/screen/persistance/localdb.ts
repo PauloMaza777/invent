@@ -50,20 +50,24 @@ export default class LocalDB {
       return false;
     }
   }
-  static async addMOvimiento({producto,cantidad}:{cantidad:number,producto:number}) {
+  static async addMOvimiento({ producto, cantidad }: { cantidad: number, producto: number }) {
     try {
       const db = await LocalDB.connect();
-      await db.executeSql(
-        'INSERT INTO Movimientos (fk_producto, creado, cantidad) VALUES (?, ?, ?,)',
+      var res = await db.executeSql(
+        'INSERT INTO Movimientos (fk_producto, creado, cantidad) VALUES (?, ?, ?)',
         [producto, Date.now(), cantidad],
       );
+      console.log(res);
 
-      
 
-      await db.executeSql(
+
+
+      var res2 = await db.executeSql(
         'UPDATE productos SET currentStock = currentStock + ? WHERE id = ?',
-        [ cantidad,producto],
+        [cantidad, producto],
       );
+
+      console.log(res2);
 
       return true;
     } catch (error) {

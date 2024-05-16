@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { Product } from './model/Products';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useEffect, useState } from 'react';
@@ -27,9 +27,10 @@ function Detalles({ route, navigation }: Props): React.JSX.Element {
       const db = await LocalDB.connect();
       db.transaction(async tx => {
         tx.executeSql(
-          'SELECT * FROM Movimientos ',
-          [],
-          (_, res) =>{ setmoviminetos(res.rows.raw()); console.log(res.rows.raw());
+          'SELECT * FROM Movimientos WHERE fk_producto = ?',
+          [route.params.product?.id],
+          (_, res) => {
+            setmoviminetos(res.rows.raw()); console.log(res.rows.raw());
           },
           error => console.error({ error }),
         );
@@ -38,6 +39,15 @@ function Detalles({ route, navigation }: Props): React.JSX.Element {
   }, [route, navigation]);
 
 
+
+
+  const productItem = ({ item }: { item: any }) => (
+    <View style={{ flexDirection: 'row' }}>
+      <Text>  {item.id}</Text>
+      <Text>  {item.fk_producto}</Text>
+      <Text>  {item.cantidad}</Text>
+    </View>
+  );
 
   return (
     <SafeAreaView>
@@ -49,7 +59,15 @@ function Detalles({ route, navigation }: Props): React.JSX.Element {
           <Text>Stock Max: {product.maxStock}</Text>
           <Text>Stock Minimo: {product.currentStock}</Text>
         </View>
+
+
       )}
+
+      <FlatList
+        data={moviminetos}
+        renderItem={productItem}
+        keyExtractor={item => item.id.toString()}
+      />
     </SafeAreaView>
   );
 }
